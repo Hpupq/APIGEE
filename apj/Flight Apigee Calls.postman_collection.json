@@ -1,0 +1,381 @@
+{
+	"info": {
+		"_postman_id": "b813e884-d77e-4d56-a6f9-a21131e1e585",
+		"name": "Flight Apigee Calls",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Flight Booking",
+			"description": "",
+			"item": [
+				{
+					"name": "Search Flights",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "bbc9a6b2-a3a6-4db3-be0f-156de7283aef",
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "4ef06f27-71da-4b8b-bf0e-3d3d76d224f2",
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Source Test\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.source).to.eql(\"BLR\");",
+									"});",
+									"pm.test(\"Destination Test\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.destination).to.eql(\"BOM\");",
+									"});",
+									"",
+									""
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "{{acceptHeader}}",
+								"description": "Accept header for format of excpected response. Default Value - application/vnd.flight.api-v1+json"
+							},
+							{
+								"key": "transaction-id",
+								"value": "{{$guid}}",
+								"description": "unique transaction id for traceability . "
+							}
+						],
+						"body": {},
+						"url": {
+							"raw": "{{protocol}}://{{host}}{{flightSearchPath}}?source=BLR&desination=BOM&dateOfDeparture=28/05/2018&dateOfReturn=29/05/2018&seatingClass=E&adults=1&children=0&infants=0&onlyDirectFlights=N",
+							"protocol": "{{protocol}}",
+							"host": [
+								"{{host}}{{flightSearchPath}}"
+							],
+							"query": [
+								{
+									"key": "source",
+									"value": "BLR",
+									"description": "Required. source airport code as per IATA"
+								},
+								{
+									"key": "desination",
+									"value": "BOM",
+									"description": "Required. destination airport code as per IATA"
+								},
+								{
+									"key": "dateOfDeparture",
+									"value": "28/05/2018",
+									"description": "Required. data of departure"
+								},
+								{
+									"key": "dateOfReturn",
+									"value": "29/05/2018",
+									"description": "Optional. Needed in case of return journey"
+								},
+								{
+									"key": "seatingClass",
+									"value": "E",
+									"description": "Required. Economy or Business class . Possible values : E and B . By default, E"
+								},
+								{
+									"key": "adults",
+									"value": "1",
+									"description": "Required. Number of adults. MIn one adult is required."
+								},
+								{
+									"key": "children",
+									"value": "0",
+									"description": "Optional. Number of children"
+								},
+								{
+									"key": "infants",
+									"value": "0",
+									"description": "Optional. Number of infants"
+								},
+								{
+									"key": "onlyDirectFlights",
+									"value": "N",
+									"description": "Optional. If only direct flights . Possible values : Y or N . By Default N"
+								}
+							]
+						},
+						"description": "API to search for flights. This search would be based on certain fields like departure date , return date, number of travellers etc.\nResponse would contain list of flights based on search query. in response, returnFlight field is optional and will come only if the request is for return trip"
+					},
+					"response": [
+						{
+							"id": "5d067b92-434e-4932-9620-5980dcb31366",
+							"name": "Search Flights",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "{{acceptHeader}}",
+										"disabled": false
+									},
+									{
+										"key": "transaction-id",
+										"value": "{{$guid}}",
+										"disabled": false
+									}
+								],
+								"body": {},
+								"url": {
+									"raw": "{{protocol}}://{{host}}{{flightSearchPath}}?source=BLR&desination=BOM&dateOfDeparture=28/05/2018&dateOfArrival&seatingClass=E&adults=1&children=0&infants=0&onlyDirectFlights=N",
+									"protocol": "{{protocol}}",
+									"host": [
+										"{{host}}{{flightSearchPath}}"
+									],
+									"query": [
+										{
+											"key": "source",
+											"value": "BLR",
+											"description": "Required. source airport code as per IATA",
+											"warning": ""
+										},
+										{
+											"key": "desination",
+											"value": "BOM",
+											"description": "Required. destination airport code as per IATA",
+											"warning": ""
+										},
+										{
+											"key": "dateOfDeparture",
+											"value": "28/05/2018",
+											"description": "Required. data of departure",
+											"warning": ""
+										},
+										{
+											"key": "dateOfArrival",
+											"value": null,
+											"description": "Optional. Needed in case of return journey",
+											"warning": ""
+										},
+										{
+											"key": "seatingClass",
+											"value": "E",
+											"description": "Required. Economy or Business class . Possible values : E and B . By default, E",
+											"warning": ""
+										},
+										{
+											"key": "adults",
+											"value": "1",
+											"description": "Required. Number of adults. MIn one adult is required.",
+											"warning": ""
+										},
+										{
+											"key": "children",
+											"value": "0",
+											"description": "Optional. Number of children",
+											"warning": ""
+										},
+										{
+											"key": "infants",
+											"value": "0",
+											"description": "Optional. Number of infants",
+											"warning": ""
+										},
+										{
+											"key": "onlyDirectFlights",
+											"value": "N",
+											"description": "Optional. If only direct flights . Possible values : Y or N . By Default N",
+											"warning": ""
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Length",
+									"value": "809",
+									"name": "Content-Length",
+									"description": "The length of the response body in octets (8-bit bytes)"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/vnd.flight.api-v1+json; charset=UTF-8",
+									"name": "Content-Type",
+									"description": "The mime type of this content"
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 25 May 2018 17:44:01 GMT",
+									"name": "Date",
+									"description": "The date and time that the message was sent"
+								},
+								{
+									"key": "Server",
+									"value": "Google Frontend",
+									"name": "Server",
+									"description": "A name for the server"
+								},
+								{
+									"key": "X-Cloud-Trace-Context",
+									"value": "e42e36b844e5f0f8bfe6f6d432bbb13e",
+									"name": "X-Cloud-Trace-Context",
+									"description": "Custom header"
+								},
+								{
+									"key": "access-control-allow-origin",
+									"value": "*",
+									"name": "access-control-allow-origin",
+									"description": "Specifies a URI that may access the resource. For requests without credentials, the server may specify '*' as a wildcard, thereby allowing any origin to access the resource."
+								},
+								{
+									"key": "transaction-id",
+									"value": "12345",
+									"name": "transaction-id",
+									"description": "Custom header"
+								}
+							],
+							"cookie": [],
+							"body": "{\n  \"source\": \"BLR\",\n  \"destination\": \"BOM\",\n  \"dateOfDeparture\": \"28/05/2018\",\n  \"dateOfArrival\": \"28/05/2018\",\n  \"adults\": 1,\n  \"children\": 0,\n  \"infants\": 0,\n  \"flights\": [{\n    \"airline\": \"Indigo\",\n    \"noOfStops\": 1,\n    \"pricePerAdult\": 4500,\n    \"currency\": \"INR\",\n    \"timeOfDeparture\": \"06:00\",\n    \"dateOfArrival\": \"28/05/2018\",\n    \"timeOfArrival\": \"10:30\",\n    \"durationInHours\": \"4:30\",\n    \"flightDetails\": [{\n      \"flightNumber\": \"6E111\",\n      \"source\": \"BLR\",\n      \"destination\": \"HYD\",\n      \"timeOfDeparture\": \"06:00\",\n      \"dateOfArrival\": \"28/05/2018\",\n      \"timeOfArrival\": \"07:00\",\n      \"durationInHours\": \"01:00\"\n    }, {\n      \"flightNumber\": \"6E112\",\n      \"source\": \"HYD\",\n      \"destination\": \"BOM\",\n      \"timeOfDeparture\": \"09:30\",\n      \"dateOfArrival\": \"28/05/2018\",\n      \"timeOfArrival\": \"10:30\",\n      \"durationInHours\": \"01:00\"\n    }]\n  }]\n}"
+						},
+						{
+							"id": "859552bb-7531-453a-946f-b82491d57d73",
+							"name": "Search Flights",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "{{acceptHeader}}",
+										"disabled": false
+									},
+									{
+										"key": "transaction-id",
+										"value": "{{$guid}}",
+										"disabled": false
+									}
+								],
+								"body": {},
+								"url": {
+									"raw": "{{protocol}}://{{host}}{{flightSearchPath}}?source=BLR&desination=BOM&dateOfDeparture=28/05/2018&dateOfReturn=29/05/2018&seatingClass=E&adults=1&children=0&infants=0&onlyDirectFlights=N",
+									"protocol": "{{protocol}}",
+									"host": [
+										"{{host}}{{flightSearchPath}}"
+									],
+									"query": [
+										{
+											"key": "source",
+											"value": "BLR",
+											"description": "Required. source airport code as per IATA"
+										},
+										{
+											"key": "desination",
+											"value": "BOM",
+											"description": "Required. destination airport code as per IATA"
+										},
+										{
+											"key": "dateOfDeparture",
+											"value": "28/05/2018",
+											"description": "Required. data of departure"
+										},
+										{
+											"key": "dateOfReturn",
+											"value": "29/05/2018",
+											"description": "Optional. Needed in case of return journey"
+										},
+										{
+											"key": "seatingClass",
+											"value": "E",
+											"description": "Required. Economy or Business class . Possible values : E and B . By default, E"
+										},
+										{
+											"key": "adults",
+											"value": "1",
+											"description": "Required. Number of adults. MIn one adult is required."
+										},
+										{
+											"key": "children",
+											"value": "0",
+											"description": "Optional. Number of children"
+										},
+										{
+											"key": "infants",
+											"value": "0",
+											"description": "Optional. Number of infants"
+										},
+										{
+											"key": "onlyDirectFlights",
+											"value": "N",
+											"description": "Optional. If only direct flights . Possible values : Y or N . By Default N"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Length",
+									"value": "809",
+									"name": "Content-Length",
+									"description": "The length of the response body in octets (8-bit bytes)"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/vnd.flight.api-v1+json; charset=UTF-8",
+									"name": "Content-Type",
+									"description": "The mime type of this content"
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 27 May 2018 12:29:00 GMT",
+									"name": "Date",
+									"description": "The date and time that the message was sent"
+								},
+								{
+									"key": "Server",
+									"value": "Google Frontend",
+									"name": "Server",
+									"description": "A name for the server"
+								},
+								{
+									"key": "X-Cloud-Trace-Context",
+									"value": "286b3dc71656f238a5bd6e3abcb0b1c0",
+									"name": "X-Cloud-Trace-Context",
+									"description": "Custom header"
+								},
+								{
+									"key": "access-control-allow-origin",
+									"value": "*",
+									"name": "access-control-allow-origin",
+									"description": "Specifies a URI that may access the resource. For requests without credentials, the server may specify '*' as a wildcard, thereby allowing any origin to access the resource."
+								},
+								{
+									"key": "transaction-id",
+									"value": "12345",
+									"name": "transaction-id",
+									"description": "Custom header"
+								}
+							],
+							"cookie": [],
+							"body": "{\n  \"source\": \"BLR\",\n  \"destination\": \"BOM\",\n  \"dateOfDeparture\": \"28/05/2018\",\n  \"dateOfArrival\": \"28/05/2018\",\n  \"adults\": 1,\n  \"children\": 0,\n  \"infants\": 0,\n  \"flights\": [{\n    \"airline\": \"Indigo\",\n    \"noOfStops\": 1,\n    \"pricePerAdult\": 4500,\n    \"currency\": \"INR\",\n    \"timeOfDeparture\": \"06:00\",\n    \"dateOfArrival\": \"28/05/2018\",\n    \"timeOfArrival\": \"10:30\",\n    \"durationInHours\": \"4:30\",\n    \"flightDetails\": [{\n      \"flightNumber\": \"6E111\",\n      \"source\": \"BLR\",\n      \"destination\": \"HYD\",\n      \"timeOfDeparture\": \"06:00\",\n      \"dateOfArrival\": \"28/05/2018\",\n      \"timeOfArrival\": \"07:00\",\n      \"durationInHours\": \"01:00\"\n    }, {\n      \"flightNumber\": \"6E112\",\n      \"source\": \"HYD\",\n      \"destination\": \"BOM\",\n      \"timeOfDeparture\": \"09:30\",\n      \"dateOfArrival\": \"28/05/2018\",\n      \"timeOfArrival\": \"10:30\",\n      \"durationInHours\": \"01:00\"\n    }]\n  }]\n}"
+						}
+					]
+				}
+			]
+		}
+	]
+}
